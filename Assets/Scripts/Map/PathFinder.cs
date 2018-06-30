@@ -110,7 +110,7 @@ public class PathFinder {
 					neighbor.h = Mathf.Abs(x - endX) + Mathf.Abs(z - endZ);
 					neighbor.parent = node;
 
-                    // Neighbor has never been evaluated
+					// Neighbor has never been evaluated
 					if(!neighbor.opened) {
 						openList.Push(neighbor);
 						neighbor.opened = true;
