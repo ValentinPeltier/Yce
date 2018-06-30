@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathFinder {
 	/// <summary>
-	/// Return world position path based on node parent
+	/// Return world position path based on the parent of the node
 	/// </summary>
 	/// <param name="node">Last node of the path</param>
 	private static List<Cell> RetrievePath(Node node) {
@@ -29,9 +29,9 @@ public class PathFinder {
 	}
 	
 	/// <summary>
-	/// Reset all nodes g, h, opened and closed values
+	/// Reset all nodes values
 	/// </summary>
-	/// <param name="grid"></param>
+	/// <param name="grid">The grid to reset</param>
 	private static void ResetVariables(Grid grid) {
 		// For each node in grid
 		for (int x = 0, xc = grid.nodes.Count; x < xc; x++) {
@@ -104,18 +104,19 @@ public class PathFinder {
 
 				float ng = node.g + ((node.localPosition.x - x == 0 || node.localPosition.z - z == 0) ? 1 : Mathf.Sqrt(2));
 
-				// If neighbor has not been already tested or cannot be reached by shorter path
+				// If neighbor has never been evaluated or this path is the best for now
 				if(!neighbor.opened || ng < neighbor.g) {
 					neighbor.g = ng;
 					neighbor.h = Mathf.Abs(x - endX) + Mathf.Abs(z - endZ);
 					neighbor.parent = node;
 
+                    // Neighbor has never been evaluated
 					if(!neighbor.opened) {
 						openList.Push(neighbor);
 						neighbor.opened = true;
 					}
 					else {
-						// Neighbor can be reached by shorter path
+						// This path is the best path for now
 						openList.UpdateNode(neighbor);
 					}
 				}
